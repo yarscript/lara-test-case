@@ -1,8 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "yarscript/lara-test-case",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "Laravel test case",
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
