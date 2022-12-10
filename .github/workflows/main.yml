@@ -1,0 +1,63 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  ci:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        node: [ 16 ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Get all tags
+
+
+  cd:
+    if: ${{ github.event_name == 'push' }}
+
+    needs: ci
+
+    environment: production
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        node: [ 16 ]
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # AWS repository deploy via ssh
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+          ARGS: ${{ secrets.DEPLOY_ARGS }}
+          SOURCE: ${{ secrets.DEPLOY_SOURCE }}
+          REMOTE_HOST: ${{ secrets.DEPLOY_REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.DEPLOY_REMOTE_USER }}
+          TARGET: ${{ secrets.DEPLOY_TARGET }}
+          EXCLUDE: ${{ secrets.DEPLOY_EXCLUDE }}
+
+      # apt packages install
+
+      # AWS repository deploy
