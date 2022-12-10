@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+    # web:
+    #   build: .
+    #   volumes:
+    #     - ./:/app
+    #   ports:
+    #     - '8080:8080'
+    #   env_file: .env
+    #   restart: always
+    db:
+        image: mariadb
+        env_file: .env
+        ports:
+            - '3306:3306'
+        restart: always
+    cache:
+        image: redis:6.2-alpine
+        restart: always
+        ports:
+            - '6379:6379'
+        command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+        volumes:
+            - cache:/data
+volumes:
+    db:
+        driver: local
+    cache:
+        driver: local
