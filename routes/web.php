@@ -17,9 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('login', function () {
-    return view('login');
-})->name('login');
-Route::get('login/google', [\App\Http\Controllers\Api\Auth\Google\LoginController::class, 'redirectToProvider'])->name('login.google');
+Route::get('login/google', [\App\Http\Controllers\Api\Auth\Google\LoginController::class, 'redirectToProvider'])->name('login');
 Route::get('login/google/callback', [\App\Http\Controllers\Api\Auth\Google\LoginController::class, 'handleProviderCallback']);
 
