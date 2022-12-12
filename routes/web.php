@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('login/google', [\App\Http\Controllers\Api\Auth\Google\LoginController::class, 'redirectToProvider']);
+Route::get('login/google/callback', [\App\Http\Controllers\Api\Auth\Google\LoginController::class, 'handleProviderCallback']);
+
