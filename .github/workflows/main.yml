@@ -8,6 +8,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+env:
+  php-version: '8.2'
+  node-version: 16
+
 jobs:
   ci:
     runs-on: ${{ matrix.os }}
@@ -15,7 +19,6 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest ]
-        node: [ 16 ]
 
     steps:
       - name: Checkout repository
@@ -73,7 +76,6 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest ]
-        node: [ 16 ]
 
     permissions:
       id-token: write
