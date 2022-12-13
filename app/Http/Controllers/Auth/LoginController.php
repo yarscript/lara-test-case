@@ -40,13 +40,4 @@ class LoginController extends Controller
     {
         $this->middleware('guest', ['except' => 'logout']);
     }
-
-    public function showLoginOrRegister()
-    {
-        if (! DB::table('users')->count() > 0 ) {
-            return redirect()->route('register');
-        }
-
-        return $this->showLoginForm();
-    }
 }

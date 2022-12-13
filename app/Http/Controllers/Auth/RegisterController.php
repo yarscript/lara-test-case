@@ -83,34 +83,31 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  Request  $request
      * @return User|null
      */
-    protected function create(array $data): ?User
+    protected function create(Request $request): ?User
     {
-        $first = ! DB::table('users')->count() > 0;
-        if (config('monica.disable_signup') == 'true' && ! $first) {
-            abort(403, trans('auth.signup_disabled'));
-        }
-
         try {
-            $account = Account::createDefault(
-                $data['first_name'],
-                $data['last_name'],
-                $data['email'],
-                $data['password'],
-                RequestHelper::ip(),
-                $data['lang']
-            );
+
+//            $account = User::createDefault(
+//                $data['first_name'],
+//                $data['last_name'],
+//                $data['email'],
+//                $data['password'],
+//                RequestHelper::ip(),
+//                $data['lang']
+//            );
             /** @var User */
-            $user = $account->users()->first();
+//            $user = $account->users()->first();
 
-            if (! $first) {
+//            if (! $first) {
                 // send me an alert
-                SendNewUserAlert::dispatch($user);
-            }
+//                SendNewUserAlert::dispatch($user);
+//            }
 
-            return $user;
+//            return $user;
+            return new User();
         } catch (\Exception $e) {
             Log::error($e);
 
