@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use Ramsey\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\{Eloquent\BaseRepository as EloquentRepository,
     Exceptions\RepositoryException,
     Traits\CacheableRepository,
@@ -21,11 +21,11 @@ abstract class BaseRepository extends EloquentRepository implements CacheableInt
      * Find data by field and value
      *
      * @param string $field
-     * @param string $value
+     * @param string|null $value
      * @param array $columns
      * @return mixed
      */
-    public function findOneByField(string $field, $value = null, $columns = ['*'])
+    public function findOneByField(string $field, string $value = null, array $columns = ['*']): mixed
     {
         $model = $this->findByField($field, $value, $columns = ['*']);
 
@@ -39,7 +39,7 @@ abstract class BaseRepository extends EloquentRepository implements CacheableInt
      * @param array $columns
      * @return mixed
      */
-    public function findOneWhere(array $where, $columns = ['*'])
+    public function findOneWhere(array $where, array $columns = ['*']): mixed
     {
         $model = $this->findWhere($where, $columns);
 
@@ -54,11 +54,11 @@ abstract class BaseRepository extends EloquentRepository implements CacheableInt
      * @return mixed
      * @throws RepositoryException
      */
-    public function find($id, $columns = ['*'])
+    public function find($id, $columns = ['*']): mixed
     {
         $this->applyCriteria();
         $this->applyScope();
-        $model = $this->model->find($id, $columns);
+        $model = $this->getModel()->find($id, $columns);
         $this->resetModel();
 
         return $this->parserResult($model);
@@ -72,7 +72,7 @@ abstract class BaseRepository extends EloquentRepository implements CacheableInt
      * @return mixed
      * @throws RepositoryException
      */
-    public function findOrFail($id, $columns = ['*'])
+    public function findOrFail(int $id, array $columns = ['*']): mixed
     {
         $this->applyCriteria();
         $this->applyScope();
@@ -90,7 +90,7 @@ abstract class BaseRepository extends EloquentRepository implements CacheableInt
      * @return mixed
      * @throws RepositoryException
      */
-    public function count(array $where = [], $columns = '*')
+    public function count(array $where = [], $columns = '*'): mixed
     {
         $this->applyCriteria();
         $this->applyScope();
@@ -107,20 +107,10 @@ abstract class BaseRepository extends EloquentRepository implements CacheableInt
     }
 
     /**
-     * @return mixed
+     * @return Model
      */
-    public function getModel()
+    public function getModel(): Model
     {
         return $this->model;
-    }
-
-    /**
-     * @param string $field
-     * @param array $data
-     * @return void
-     */
-    public function checkUuid(string $field, array &$data): void
-    {
-        $data[ $field ] = $data[ $field ] ?? Uuid::uuid4()->toString();
     }
 }

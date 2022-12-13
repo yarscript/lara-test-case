@@ -186,6 +186,8 @@ return [
          * Package Service Providers...
          */
         \Laravel\Socialite\SocialiteServiceProvider::class,
+        \Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        \Laravel\Passport\PassportServiceProvider::class,
 
         /*
          * Application Service Providers...

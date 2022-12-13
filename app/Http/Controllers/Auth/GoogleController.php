@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth\Google;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use JetBrains\PhpStorm\NoReturn;
 use Laravel\Socialite\Facades\Socialite;
 
-class LoginController extends Controller
+class GoogleController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -19,10 +19,10 @@ class LoginController extends Controller
     |
     */
 
-
     /**
      * Redirect the user to the GitHub authentication page.
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Illuminate\Http\RedirectResponse
      */
     public function redirectToProvider(): \Symfony\Component\HttpFoundation\RedirectResponse|\Illuminate\Http\RedirectResponse
     {
@@ -32,8 +32,9 @@ class LoginController extends Controller
     /**
      * Obtain the user information from GitHub.
      *
+     * @return void
      */
-    #[NoReturn] public function handleProviderCallback()
+    #[NoReturn] public function handleProviderCallback(): void
     {
         $user = Socialite::driver('google')->stateless()->user();
 

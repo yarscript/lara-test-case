@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginOrRegister'])->name('loginRedirect');
 
-Route::get('login/google', [\App\Http\Controllers\Api\Auth\Google\LoginController::class, 'redirectToProvider'])->name('login');
-Route::get('login/google/callback', [\App\Http\Controllers\Api\Auth\Google\LoginController::class, 'handleProviderCallback']);
 
+Route::get('login/google', [\App\Http\Controllers\Auth\GoogleController::class, 'redirectToProvider'])->name('login');
+Route::get('login/google/callback', [\App\Http\Controllers\Auth\GoogleController::class, 'handleProviderCallback']);
+
+Route::get('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
