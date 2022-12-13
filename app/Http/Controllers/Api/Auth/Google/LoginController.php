@@ -8,6 +8,18 @@ use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Login Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles authenticating Google users for the application and
+    | redirecting them to your home screen. The controller uses a trait
+    | to conveniently provide its functionality to your applications.
+    |
+    */
+
+
     /**
      * Redirect the user to the GitHub authentication page.
      *
