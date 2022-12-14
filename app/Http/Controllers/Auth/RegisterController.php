@@ -20,7 +20,7 @@ class RegisterController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Register Controller
+    | Form Controller
     |--------------------------------------------------------------------------
     |
     | This controller handles the registration of new users as well as their
@@ -39,7 +39,7 @@ class RegisterController extends Controller
     protected $redirectTo = '/dashboard';
 
     /**
-     * Create a new controller instance.
+     * BaseCreate a new controller instance.
      *
      * @return void
      */
@@ -53,13 +53,8 @@ class RegisterController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function showRegistrationForm(Request $request)
+    public function showRegistrationForm(Request $request): \Illuminate\View\View
     {
-        $first = ! DB::table('users')->count() > 0;
-        if (config('monica.disable_signup') == 'true' && ! $first) {
-            abort(403, trans('auth.signup_disabled'));
-        }
-
         return view('auth.register');
     }
 
@@ -69,7 +64,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($data, [
             'last_name' => 'required|max:255',
@@ -81,7 +76,7 @@ class RegisterController extends Controller
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * BaseCreate a new user instance after a valid registration.
      *
      * @param  Request  $request
      * @return User|null

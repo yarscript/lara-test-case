@@ -38,6 +38,8 @@ class GoogleController extends Controller
     {
         $user = Socialite::driver('google')->stateless()->user();
 
+        Auth::login($user);
+
         dd($user);
         // $user->token;
     }

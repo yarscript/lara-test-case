@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements UserModelContract
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -21,7 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'api-token',
+        'api_token',
+        'google_id',
+        'google_token',
     ];
 
     /**
@@ -33,6 +35,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'api_token',
+        'google_id',
+        'google_token'
     ];
 
     /**
