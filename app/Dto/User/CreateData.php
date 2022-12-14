@@ -4,7 +4,7 @@ namespace App\Dto\User;
 
 use App\Dto\BaseDto;
 
-class CreateData extends BaseDto implements CreateDataContract
+class CreateData extends BaseDto
 {
 
 }

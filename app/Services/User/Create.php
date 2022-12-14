@@ -18,7 +18,7 @@ class Create extends BaseService
     /**
      * BaseCreate a user.
      *
-     * @param array $data
+     * @param CreateStrategyAbstract $strategy
      * @return User
      */
     public function execute(CreateStrategyAbstract $strategy): User

@@ -7,6 +7,7 @@ use App\Models\User\UserModelContract;
 use App\Repository\User\CreateContract as CreateUserRepositoryContract;
 use App\Repository\User\Create as CreateUserRepository;
 use App\Repository\BaseRepository;
+use App\Services\User\Create as CreateUserService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,4 +32,8 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+
+    public array $singletons = [
+        CreateUserService::class => CreateUserService::class
+    ];
 }
