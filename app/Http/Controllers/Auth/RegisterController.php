@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\User\Create as UserCreateRequest;
 use App\Models\User\User;
 use Illuminate\Http\Request;
 //use App\Helpers\LocaleHelper;
@@ -59,32 +60,14 @@ class RegisterController extends Controller
     }
 
     /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
-    {
-        return Validator::make($data, [
-            'last_name' => 'required|max:255',
-            'first_name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', PasswordRules::defaults()],
-            'policy' => 'required',
-        ]);
-    }
-
-    /**
      * BaseCreate a new user instance after a valid registration.
      *
-     * @param  Request  $request
+     * @param  UserCreateRequest  $request
      * @return User|null
      */
-    protected function create(Request $request): ?User
+    protected function create(UserCreateRequest $request): ?User
     {
         try {
-
 //            $account = User::createDefault(
 //                $data['first_name'],
 //                $data['last_name'],
