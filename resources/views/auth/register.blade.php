@@ -420,6 +420,8 @@
             margin: 1.3vh 2vw 2vh 2vw;
         }
     </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4823081636700615"
+            crossorigin="anonymous"></script>
 </head>
 <body class="antialiased">
 <div

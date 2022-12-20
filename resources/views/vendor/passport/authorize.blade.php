@@ -36,6 +36,8 @@
             display: inline;
         }
     </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4823081636700615"
+            crossorigin="anonymous"></script>
 </head>
 <body class="passport-authorize">
     <div class="container">
