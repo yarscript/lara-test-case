@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 
 /**
- *
+ * Create User Service
  */
 class Create extends BaseService
 {
@@ -24,7 +24,7 @@ class Create extends BaseService
     public function execute(CreateStrategyAbstract $strategy): User
     {
         $user = $strategy->execute();
-        $user->save();
+//        $user->save();
 
         return $user;
     }

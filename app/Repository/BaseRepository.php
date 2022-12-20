@@ -13,7 +13,7 @@ use Prettus\Repository\{Eloquent\BaseRepository as EloquentRepository,
  * Class BaseRepository
  * @package App\Repository
  */
-abstract class BaseRepository extends EloquentRepository implements CacheableInterface, BaseRepositoryContract
+abstract class BaseRepository extends EloquentRepository implements CacheableInterface
 {
     use CacheableRepository;
 

@@ -4,9 +4,7 @@ namespace App\Providers;
 
 use App\Models\User\User;
 use App\Models\User\UserModelContract;
-use App\Repository\User\CreateContract as CreateUserRepositoryContract;
 use App\Repository\User\Create as CreateUserRepository;
-use App\Repository\BaseRepository;
 use App\Services\User\Create as CreateUserService;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,7 +18,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(UserModelContract::class, User::class);
-        $this->app->bind(CreateUserRepositoryContract::class, CreateUserRepository::class);
     }
 
     /**
@@ -34,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
     }
 
     public array $singletons = [
-        CreateUserService::class => CreateUserService::class
+        CreateUserService::class => CreateUserService::class,
+        CreateUserRepository::class => CreateUserRepository::class,
     ];
 }

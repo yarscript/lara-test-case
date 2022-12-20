@@ -3,7 +3,6 @@
 namespace App\Strategies\Create\User;
 
 use App\Dto\BaseDto;
-use App\Dto\User\CreateData;
 use App\Repository\BaseRepository;
 use App\Repository\User\Create;
 use App\Strategies\Create\User\User as CreateUserAbstractStrategy;
@@ -23,14 +22,15 @@ class Google extends CreateUserAbstractStrategy
      */
     public function create(BaseRepository $repository, BaseDto $dto): \App\Models\User\User
     {
+        /** @var Create $dto */
         return $this->createGoogleUser($repository, $dto);
     }
 
     /**
      * @throws ValidatorException
      */
-    private function createGoogleUser(Create $createUserRepository, CreateData $createUserDto): \App\Models\User\User
+    private function createGoogleUser(Create $createUserRepository, Create $createUserDto): \App\Models\User\User
     {
-        return $createUserRepository->createUser($createUserDto->toArray());
+        return $createUserRepository->createUser($createUserDto->all());
     }
 }

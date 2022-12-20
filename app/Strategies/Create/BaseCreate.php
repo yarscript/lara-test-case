@@ -9,7 +9,7 @@ use App\Strategies\BaseStrategy;
 /**
  * Class App\Strategies\User\BaseCreate
  */
-abstract class BaseCreate extends BaseStrategy implements BaseCreateContract
+abstract class BaseCreate extends BaseStrategy
 {
     /**
      * @param BaseRepository $repository

@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Dto\Create\Create as CreateUserDataDto;
+use App\Dto\Create\User\Google as CreateGoogleUserDto;
 use App\Http\Controllers\Controller;
 use App\Repository\User\Create as CreateUserRepository;
 use App\Services\User\Create as CreateUserService;
 use App\Strategies\Create\User\Google as GoogleCreateUserStrategy;
 use JetBrains\PhpStorm\NoReturn;
 use Laravel\Socialite\Facades\Socialite;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class GoogleController extends Controller
 {
@@ -24,22 +28,28 @@ class GoogleController extends Controller
 
     private const GOOGLE_DRIVER = 'google';
 
-    private CreateUserRepository $createUserRepository;
+
+    public function __construct(
+        private CreateUserRepository $createUserRepository
+    )
+    {
+    }
 
     /**
+     * @param CreateUserDataDto $createUserData
      * @return GoogleCreateUserStrategy
      */
-    private function initStrategy(): GoogleCreateUserStrategy
+    protected function initStrategy(CreateUserDataDto $createUserData): GoogleCreateUserStrategy
     {
-        new GoogleCreateUserStrategy();
+       return new GoogleCreateUserStrategy($this->createUserRepository, $createUserData);
     }
 
     /**
      * Redirect the user to the GitHub authentication page.
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Illuminate\Http\RedirectResponse
+     * @return RedirectResponse|\Illuminate\Http\RedirectResponse
      */
-    public function redirectToProvider(): \Symfony\Component\HttpFoundation\RedirectResponse|\Illuminate\Http\RedirectResponse
+    public function redirectToProvider(): RedirectResponse|\Illuminate\Http\RedirectResponse
     {
         return Socialite::driver(self::GOOGLE_DRIVER)->redirect();
     }
@@ -48,16 +58,24 @@ class GoogleController extends Controller
      * Obtain the user information from GitHub.
      *
      * @return void
+     * @throws UnknownProperties
      */
     #[NoReturn] public function handleProviderCallback(): void
     {
-        $user = Socialite::driver(self::GOOGLE_DRIVER)->stateless()->user();
+        $userData = Socialite::driver(self::GOOGLE_DRIVER)->stateless()->user();
 
-        app(CreateUserService::class)->execute();
+        $createUserDto = new CreateGoogleUserDto([
+            'email' => $userData['email'],
+            'provider_id' => $userData['id'],
+            'name' => $userData['name'],
+        ]);
 
-        Auth::login($user);
+        $dd = app(CreateUserService::class)->execute($this->initStrategy($createUserDto));
 
-        dd($user);
+//        Auth::login($userData);
+
+        dd($dd);
+        dd($userData);
         // $user->token;
     }
 

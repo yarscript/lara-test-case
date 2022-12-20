@@ -2,12 +2,8 @@
 
 namespace App\Http\Requests\User;
 
-use App\Dto\User\CreateData;
 use App\Http\Requests\BaseRequest;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password as PasswordRules;
-use Spatie\DataTransferObject\DataTransferObject;
 
 class Create extends BaseRequest
 {
@@ -16,7 +12,7 @@ class Create extends BaseRequest
      */
     public function dto(): string
     {
-        return CreateData::class;
+        return Create::class;
     }
 
     /**

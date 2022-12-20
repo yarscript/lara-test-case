@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Dto\Create\Create as CreateUserDataDto;
+use App\Dto\Create\User\Form as CreateFormUserDto;
 use App\Http\Requests\User\Create as UserCreateRequest;
 use App\Models\User\User;
+use App\Services\User\Create as CreateUserService;
+use App\Strategies\Create\User\Form as FormCreateUserStrategy;
 use Illuminate\Http\Request;
 //use App\Helpers\LocaleHelper;
 //use App\Helpers\RequestHelper;
@@ -16,6 +20,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Validation\Rules\Password as PasswordRules;
+use Illuminate\View\View;
+use App\Repository\User\Create as CreateUserRepository;
 
 class RegisterController extends Controller
 {
@@ -44,15 +50,27 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(
+        private CreateUserRepository $createUserRepository
+    )
     {
         $this->middleware('guest');
     }
 
     /**
+     * @param CreateUserDataDto $createUserData
+     * @return FormCreateUserStrategy
+     */
+    protected function initStrategy(CreateUserDataDto $createUserData): FormCreateUserStrategy
+    {
+        return new FormCreateUserStrategy($this->createUserRepository, $createUserData);
+    }
+
+    /**
      * Show the application registration form.
      *
-     * @return \Illuminate\View\View
+     * @param Request $request
+     * @return View
      */
     public function showRegistrationForm(Request $request): \Illuminate\View\View
     {
@@ -68,6 +86,15 @@ class RegisterController extends Controller
     protected function create(UserCreateRequest $request): ?User
     {
         try {
+            $createUserDto = new CreateFormUserDto([
+                'password' => $request['passpoet'],
+                'email' => $request['email'],
+                'name' => $request['name'],
+            ]);
+
+           $user = app(CreateUserService::class)->execute($this->initStrategy($createUserDto));
+
+            dd($user);
 //            $account = User::createDefault(
 //                $data['first_name'],
 //                $data['last_name'],
