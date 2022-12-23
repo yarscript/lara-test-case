@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>{{ config('app.name') }} - Authorization</title>
-
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4823081636700615"
+     crossorigin="anonymous"></script>
     <!-- Styles -->
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 
@@ -36,8 +37,6 @@
             display: inline;
         }
     </style>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4823081636700615"
-            crossorigin="anonymous"></script>
 </head>
 <body class="passport-authorize">
     <div class="container">
